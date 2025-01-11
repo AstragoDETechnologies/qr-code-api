@@ -40,3 +40,8 @@ watch RUST_LOG="default" PROFILE="dev":
 # Build the program.
 build PROFILE="dev":
     cargo build --profile {{PROFILE}}
+
+# ==== Docker
+
+docker-run:
+    docker compose up --build --force-recreate -d
