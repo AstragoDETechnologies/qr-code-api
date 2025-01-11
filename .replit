@@ -1,0 +1,82 @@
+hidden = ["target", ".cargo", ".git"]
+run = "just run"
+
+[nix]
+channel = "stable-24_05"
+
+[packager]
+language = "rust"
+
+[packager.features]
+packageSearch = true
+
+[languages.rust]
+pattern = "**/*.rs"
+
+[languages.rust.languageServer]
+start = "rust-analyzer"
+
+[workflows]
+
+[[workflows.workflow]]
+name = "Run Trace"
+mode = "sequential"
+author = 5887446
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "just trace"
+
+[[workflows.workflow]]
+name = "Run Debug"
+mode = "sequential"
+author = 5887446
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "just debug"
+
+[[workflows.workflow]]
+name = "Run Info"
+mode = "sequential"
+author = 5887446
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "just info"
+
+[[workflows.workflow]]
+name = "Run Warn"
+mode = "sequential"
+author = 5887446
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "just warn"
+
+[[workflows.workflow]]
+name = "Run Error"
+mode = "sequential"
+author = 5887446
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "just error"
+
+[[workflows.workflow]]
+name = "Format Source Code"
+mode = "sequential"
+author = 5887446
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cargo fmt"
+
+[[workflows.workflow]]
+name = "Execute Tests"
+mode = "sequential"
+author = 5887446
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cargo test"
