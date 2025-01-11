@@ -22,5 +22,5 @@ async fn main() -> Result<(), Box<dyn Error>> {
 }
 
 async fn index() -> String {
-    String::from("The QR-Code API is running!\nNavigate to \"/generate?data=HelloWorld\" to see an example qr-code.")
+    String::from("The QR-Code API is running!\nNavigate to \"/generate?data=HelloWorld\" to see an example QR-Code.")
 }
