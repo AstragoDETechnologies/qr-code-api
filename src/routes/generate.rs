@@ -16,12 +16,19 @@ pub struct Params {
 }
 
 pub async fn get_generate(Query(params): Query<Params>) -> impl IntoResponse {
+    if &params.data == "" {
+        return Response::builder()
+            .status(StatusCode::INTERNAL_SERVER_ERROR)
+            .body(Body::from("The data-query must not be empty."))
+            .unwrap();
+    }
+
     let code = match QrCode::new(&params.data) {
         Ok(code) => code,
         Err(e) => {
             return Response::builder()
                 .status(StatusCode::INTERNAL_SERVER_ERROR)
-                .body(Body::from(format!("Error: {e}")))
+                .body(Body::from(e.to_string()))
                 .unwrap();
         }
     };
