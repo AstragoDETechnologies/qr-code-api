@@ -23,7 +23,7 @@ pub async fn get_generate(Query(params): Query<Params>) -> impl IntoResponse {
             .unwrap();
     }
 
-    let code = match QrCode::new(&params.data) {
+    let code = match QrCode::with_error_correction_level(&params.data, qrcode::EcLevel::Q) {
         Ok(code) => code,
         Err(e) => {
             return Response::builder()
