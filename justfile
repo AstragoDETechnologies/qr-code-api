@@ -43,5 +43,12 @@ build PROFILE="dev":
 
 # ==== Docker
 
-docker-run:
+start:
+    git pull
     docker compose up --build --force-recreate -d
+
+stop:
+    docker compose down
+
+logs:
+    docker compose logs
