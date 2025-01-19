@@ -13,12 +13,12 @@ async fn main() -> Result<(), Box<dyn Error>> {
     // Initialize tracing (Logger)
     tracing_subscriber::fmt::init();
 
-    let cors: CorsLayer = CorsLayer::permissive();
+    let cors_layer: CorsLayer = CorsLayer::permissive();
 
     let app: axum::Router = Router::new()
         .route("/", get(index))
         .route("/generate", get(get_generate))
-        .layer(ServiceBuilder::new().layer(cors));
+        .layer(ServiceBuilder::new().layer(cors_layer));
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await?;
 
