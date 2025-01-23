@@ -1,4 +1,5 @@
 mod routes;
+mod utils;
 
 use axum::{routing::get, Router};
 use routes::generate::get_generate;
