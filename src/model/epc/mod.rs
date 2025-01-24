@@ -32,7 +32,7 @@ pub struct EpcQrCode {
 impl EpcQrCode {
     pub fn verify(&self) -> VerificationResult {
         // Verify existence of BIC
-        if self.version == Version::NonEee && self.bic == None {
+        if self.version == Version::NonEea && self.bic == None {
             return VerificationResult {
                 success: false,
                 error_msg: Some(String::from(
@@ -79,13 +79,37 @@ impl EpcQrCode {
             };
         }
 
+        // Verify Remittance (Reference)
+        if let Some(remittance_ref) = &self.remittance_ref {
+            if remittance_ref.len() > 25 || remittance_ref.len() <= 0 {
+                return VerificationResult {
+                    success: false,
+                    error_msg: Some(String::from(
+                        "If remittance_ref is defined, it must be between 1 and 25 characters long.",
+                    )),
+                };
+            }
+        }
+
+        // Verify Remittance (Text)
+        if let Some(remittance_txt) = &self.remittance_txt {
+            if remittance_txt.len() > 140 || remittance_txt.len() <= 0 {
+                return VerificationResult {
+                    success: false,
+                    error_msg: Some(String::from(
+                        "If remittance_txt is defined, it must be between 1 and 140 characters long.",
+                    )),
+                };
+            }
+        }
+
         // Verify Information
         if let Some(information) = &self.information {
             if information.len() > 70 || information.len() <= 0 {
                 return VerificationResult {
                     success: false,
                     error_msg: Some(String::from(
-                        "If Information is defined, it must be between 1 and 70 characters long.",
+                        "If information is defined, it must be between 1 and 70 characters long.",
                     )),
                 };
             }
@@ -158,7 +182,7 @@ impl EpcQrCode {
         }
 
         // Remittance (Text)
-        match &self.remittance_ref {
+        match &self.remittance_txt {
             Some(remittance) => output += &format!("{}\n", remittance),
             None => output += "\n",
         }

@@ -3,15 +3,15 @@ use std::error::Error;
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub enum Version {
-    NonEee, // EEE with non-EEE countries
-    Eee,    // EEE with EEE countries
+    NonEea, // EEE with non-EEE countries
+    Eea,    // EEE with EEE countries
 }
 
 impl Version {
     pub fn value(&self) -> i32 {
         match self {
-            Version::NonEee => return 1,
-            Version::Eee => return 2,
+            Version::NonEea => return 1,
+            Version::Eea => return 2,
         }
     }
 }
@@ -21,8 +21,8 @@ impl TryFrom<i32> for Version {
 
     fn try_from(value: i32) -> Result<Self, Self::Error> {
         match value {
-            1 => return Ok(Version::NonEee),
-            2 => return Ok(Version::Eee),
+            1 => return Ok(Version::NonEea),
+            2 => return Ok(Version::Eea),
             _ => return Err("Unsupported Value".into()),
         }
     }

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR-Code Gernerator API</title>
+</head>
+
+<body>
+
+    <h1>QR-Code Generator API</h1>
+
+    <p>
+        This is a simple QR-Code Generator API for creating General QR-Codes and <a
+            href="https://en.wikipedia.org/wiki/EPC_QR_code" target="_blank">EPC QR-Codes</a>.
+        <br>
+        It was created and is maintained by <a href="https://www.astrago.de" target="_blank">AstragoDE</a>.
+    </p>
+
+    <div class="routes">
+        <h2>Routes</h2>
+
+        <ul>
+            <li><a href="#routes-generate">/generate</a></li>
+            <li><a href="#routes-generate-epc">/generate/epc</a></li>
+        </ul>
+
+        <h3 id="routes-generate">GET /generate</h3>
+        <p>Generates a QR-Code based on a provided String.</p>
+
+        <h4>Query Parameters</h4>
+
+        <table>
+            <thead>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Values</th>
+                <th>Description</th>
+                <th>Optional</th>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>data</td>
+                    <td>String</td>
+                    <td><i>any</i></td>
+                    <td>URL Encoded String containing the Data that is encoded in the QR-Code</td>
+                    <td>NO</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>Example</h4>
+        <a href="/generate?data=Hello%20World" target="_blank"><code>/generate?data=Hello%20World</code></a> generates a
+        QR-Code containing the String
+        "<code>Hello World</code>".
+
+
+        <h3 id="routes-generate-epc">GET /generate/epc</h3>
+        <p>Generates an <a href="https://en.wikipedia.org/wiki/EPC_QR_code" target="_blank">EPC QR-Code</a> based on the
+            provided query
+            data.</p>
+
+        <h4>Query Parameters</h4>
+
+        <table>
+            <thead>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Values</th>
+                <th>Description</th>
+                <th>Optional</th>
+            </thead>
+
+            <tbody>
+                <!-- Version -->
+                <tr>
+                    <td>version</td>
+                    <td>String</td>
+                    <td>Eea; NonEea</td>
+                    <td>Eee = Members of the transaction are in the <a
+                            href="https://en.wikipedia.org/wiki/European_Economic_Area">EEA</a>; NonEea = Members of the
+                        transaction are not in the <a
+                            href="https://en.wikipedia.org/wiki/European_Economic_Area">EEA</a>
+                    </td>
+                    <td>NO</td>
+                </tr>
+
+                <!-- Identification -->
+                <tr>
+                    <td>identification</td>
+                    <td>String</td>
+                    <td>Sct; Inst</td>
+                    <td>Sct = SEPA Credit Transfer; Inst = SEPA Instant Credit Transfer
+                    </td>
+                    <td>NO</td>
+                </tr>
+
+                <!-- Bic -->
+                <tr>
+                    <td>bic</td>
+                    <td>String</td>
+                    <td><i>any valid BIC</i></td>
+                    <td>BIC of the recipient</td>
+                    <td>If version = Eea</td>
+                </tr>
+
+                <!-- Name -->
+                <tr>
+                    <td>name</td>
+                    <td>String</td>
+                    <td><i>String between 1 and 70 Characters</i></td>
+                    <td>Name of the recipient</td>
+                    <td>NO</td>
+                </tr>
+
+                <!-- IBAN -->
+                <tr>
+                    <td>iban</td>
+                    <td>String</td>
+                    <td><i>any valid IBAN</i></td>
+                    <td>IBAN of the recipient</td>
+                    <td>NO</td>
+                </tr>
+
+                <!-- Amount -->
+                <tr>
+                    <td>amount</td>
+                    <td>Number</td>
+                    <td><i>32 Bit floating point number between 0.01 and 999999999.99</i></td>
+                    <td>Transaction Amount in Euro (value is truncated to tow decimal places)</td>
+                    <td>YES</td>
+                </tr>
+
+                <!-- Purpose -->
+                <tr>
+                    <td>purpose</td>
+                    <td>String</td>
+                    <td>Bene; Dept; Gdds; Mtup; Pens; Sala; Trad</td>
+                    <td>Bene = Unemployment benefit; Dept = Deposit; Gdds = Purchase/sale of goods; Mtup = Mobile
+                        top-up;
+                        Pens = Pensions; Sala = Salary; Trad = Trade business</td>
+                    <td>YES</td>
+                </tr>
+
+                <!-- Remittance (Reference) -->
+                <tr>
+                    <td>remittance_ref</td>
+                    <td>String</td>
+                    <td><i>String between 1 and 25 Characters</i></td>
+                    <td>ISO 11649 RF Creditor Reference</td>
+                    <td>YES</td>
+                </tr>
+
+                <!-- Remittance (Text) -->
+                <tr>
+                    <td>remittance_txt</td>
+                    <td>String</td>
+                    <td><i>String between 1 and 140 Characters</i></td>
+                    <td>Remittance as Text</td>
+                    <td>YES</td>
+                </tr>
+
+                <!-- Information -->
+                <tr>
+                    <td>information</td>
+                    <td>String</td>
+                    <td><i>String between 1 and 70 Characters</i></td>
+                    <td>Information between the payee and the originator of the payment</td>
+                    <td>YES</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <h4>Example</h4>
+    <a href="/generate/epc?version=Eea&identification=Sct&name=CARNIVORA%20Grasleben%20e.V.&iban=DE30269910668282820000&amount=20.00&remittance_txt=I%20love%20Snow%20Leopards!&information=Donate%20to%20CARNIVORA%20e.V."
+        target="_blank"><code>/generate/epc?version=Eea&identification=Sct&name=CARNIVORA%20Grasleben%20e.V.&iban=DE30269910668282820000&amount=20.00&remittance_txt=I%20love%20Snow%20Leopards!&information=Donate%20to%20CARNIVORA%20e.V.</code></a>
+    generates a QR-Code for a donation of 20.00€ to <a href="https://www.carnivora-grasleben.de/"
+        target="_blank">CARNIVORA Wildtier –
+        und Artenschutzhilfe Grasleben e.V.</a>.
+
+    <hr>
+
+    <h2>Information [DE]</h2>
+
+    <p>Die Inhalte der QR-Codes werden basierend auf den an die API übergenenen Daten Erstellt. Für die Inhalte der
+        QR-Codes wird deswegen keinerlei Haftung übernommen. Das Scannen der QR-Codes erfolgt auf eigene Gefahr.</p>
+
+    <h3>Imprint / Impressum</h3>
+
+    <p>Für diese Website gilt das Folgende Impressum: <a href="https://www.astrago.de/imprint"
+            target="_blank">https://www.astrago.de/imprint</a>.</p>
+
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: sans-serif;
+        }
+
+        .routes h3 {
+            margin-top: 3em;
+            margin-bottom: 1em;
+            text-decoration: underline;
+        }
+
+        a {
+            color: #0088ff;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid #ffffff;
+            padding: 8px;
+        }
+
+        th {
+            text-align: left;
+        }
+
+        hr {
+            color: #ffffff;
+            margin-top: 3em;
+            margin-bottom: 3em;
+        }
+    </style>
+
+</body>
+
+</html>

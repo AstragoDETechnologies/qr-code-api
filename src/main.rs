@@ -2,7 +2,7 @@ mod model;
 mod routes;
 mod utils;
 
-use axum::{routing::get, Router};
+use axum::{response::Html, routing::get, Router};
 use routes::generate::{epc::get_generate_epc, get_generate};
 use std::error::Error;
 use tower::ServiceBuilder;
@@ -18,7 +18,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let cors_layer: CorsLayer = CorsLayer::permissive();
 
     let app: axum::Router = Router::new()
-        .route("/", get(index))
+        .route("/", get(get_index))
+        .route("/robots.txt", get(get_robots))
         .route("/generate", get(get_generate))
         .route("/generate/epc", get(get_generate_epc))
         .layer(
@@ -34,6 +35,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-async fn index() -> String {
-    String::from("The QR-Code API is running!\nNavigate to \"/generate?data=HelloWorld\" to see an example QR-Code.")
+async fn get_index() -> Html<&'static str> {
+    include_str!("../assets/index.html").into()
+}
+
+async fn get_robots() -> &'static str {
+    include_str!("../assets/robots.txt").into()
 }
