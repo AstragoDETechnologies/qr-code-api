@@ -1,11 +1,12 @@
+mod model;
 mod routes;
 mod utils;
 
 use axum::{routing::get, Router};
-use routes::generate::get_generate;
+use routes::generate::{epc::get_generate_epc, get_generate};
 use std::error::Error;
 use tower::ServiceBuilder;
-use tower_http::cors::CorsLayer;
+use tower_http::{cors::CorsLayer, trace::TraceLayer};
 #[allow(unused_imports)]
 use tracing::{debug, error, info, trace, warn};
 
@@ -19,7 +20,12 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let app: axum::Router = Router::new()
         .route("/", get(index))
         .route("/generate", get(get_generate))
-        .layer(ServiceBuilder::new().layer(cors_layer));
+        .route("/generate/epc", get(get_generate_epc))
+        .layer(
+            ServiceBuilder::new()
+                .layer(TraceLayer::new_for_http())
+                .layer(cors_layer),
+        );
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await?;
 

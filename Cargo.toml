@@ -4,7 +4,7 @@ name = "qr_code_api"
 description = "AstragoDE's Rust Template"
 # authors = ["AstragoDE <51675359+AstragoDE@users.noreply.github.com>"]
 authors = ["AstragoDE <51675359+AstragoDE@users.noreply.github.com>"]
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 readme = "README.md"
 
@@ -29,6 +29,7 @@ opt-level = 3
 
 [dependencies]
 axum = { version = "0.8.1", features = ["tokio", "tracing", "json"] }
+iban_validate = "5.0.1"
 image = "0.25.5"
 qrcode = "0.14.1"
 serde = { version = "1.0.217", features = ["derive"] }

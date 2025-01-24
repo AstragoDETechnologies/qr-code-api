@@ -1,4 +1,6 @@
-use crate::utils::generate::generate_response_from_string;
+pub mod epc;
+
+use crate::utils::generate::response::generate_response_from_string;
 use axum::{
     body::Body,
     extract::Query,
