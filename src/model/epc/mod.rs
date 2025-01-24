@@ -1,13 +1,13 @@
+pub mod identification;
+pub mod purpose;
+pub mod version;
+
 use iban::Iban;
 use identification::Identification;
 use purpose::Purpose;
 use serde::{Deserialize, Serialize};
 use std::error::Error;
 use version::Version;
-
-pub mod identification;
-pub mod purpose;
-pub mod version;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct VerificationResult {
