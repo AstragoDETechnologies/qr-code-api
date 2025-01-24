@@ -6,11 +6,6 @@ use axum::{
     response::IntoResponse,
 };
 
-// #[derive(Deserialize, Debug)]
-// pub struct Params {
-//     pub data: String,
-// }
-
 pub async fn get_generate_epc(
     Query(epc): Query<crate::model::epc::EpcQrCode>,
 ) -> impl IntoResponse {
