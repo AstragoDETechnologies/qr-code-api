@@ -1,4 +1,5 @@
 pub mod epc;
+pub mod wifi;
 
 use crate::utils::generate::response::generate_response_from_string;
 use axum::{

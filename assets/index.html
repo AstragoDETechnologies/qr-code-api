@@ -18,13 +18,19 @@
         It was created and is maintained by <a href="https://www.astrago.de" target="_blank">AstragoDE</a>.
     </p>
 
+
+    <!-- ROUTES -->
+
     <div class="routes">
         <h2>Routes</h2>
 
         <ul>
             <li><a href="#routes-generate">/generate</a></li>
             <li><a href="#routes-generate-epc">/generate/epc</a></li>
+            <li><a href="#routes-generate-wifi">/generate/wifi</a></li>
         </ul>
+
+        <!-- ROUTE: Generate -->
 
         <h3 id="routes-generate">GET /generate</h3>
         <p>Generates a QR-Code based on a provided String.</p>
@@ -41,6 +47,7 @@
             </thead>
 
             <tbody>
+                <!-- Data -->
                 <tr>
                     <td>data</td>
                     <td>String</td>
@@ -56,6 +63,7 @@
         QR-Code containing the String
         "<code>Hello World</code>".
 
+        <!-- ROUTE: Generate EPC -->
 
         <h3 id="routes-generate-epc">GET /generate/epc</h3>
         <p>Generates an <a href="https://en.wikipedia.org/wiki/EPC_QR_code" target="_blank">EPC QR-Code</a> based on the
@@ -172,17 +180,79 @@
                 </tr>
             </tbody>
         </table>
+
+        <h4>Example</h4>
+        <a href="/generate/epc?version=Eea&identification=Sct&name=CARNIVORA%20Grasleben%20e.V.&iban=DE30269910668282820000&amount=20.00&remittance_txt=I%20love%20Snow%20Leopards!&information=Donate%20to%20CARNIVORA%20e.V."
+            target="_blank"><code>/generate/epc?version=Eea&identification=Sct&name=CARNIVORA%20Grasleben%20e.V.&iban=DE30269910668282820000&amount=20.00&remittance_txt=I%20love%20Snow%20Leopards!&information=Donate%20to%20CARNIVORA%20e.V.</code></a>
+        generates a QR-Code for a donation of 20.00€ to <a href="https://www.carnivora-grasleben.de/"
+            target="_blank">CARNIVORA Wildtier –
+            und Artenschutzhilfe Grasleben e.V.</a>.
+
+        <!-- ROUTE: Generate WIFI -->
+
+        <h3 id="routes-generate-wifi">GET /generate/wifi</h3>
+        <p>Generates a QR-Code for logging into a WIFI-Netowrk.</p>
+
+        <h4>Query Parameters</h4>
+
+        <table>
+            <thead>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Values</th>
+                <th>Description</th>
+                <th>Optional</th>
+            </thead>
+
+            <tbody>
+                <!-- SSID -->
+                <tr>
+                    <td>ssid</td>
+                    <td>String</td>
+                    <td><i>any</i></td>
+                    <td>The SSID of the WIFI-Netowrk</td>
+                    <td>NO</td>
+                </tr>
+
+                <!-- Encryption -->
+                <tr>
+                    <td>encryption</td>
+                    <td>String</td>
+                    <td>Wpa; Wep</td>
+                    <td>The Encryption Method of the WIFI-Netowrk</td>
+                    <td>If no passowrd is provided</td>
+                </tr>
+
+                <!-- Password -->
+                <tr>
+                    <td>password</td>
+                    <td>String</td>
+                    <td><i>any String >= 8 characters</i></td>
+                    <td>The Password of the WIFI-Netowrk</td>
+                    <td>If no encryption is provided</td>
+                </tr>
+
+                <!-- Hidden -->
+                <tr>
+                    <td>hidden</td>
+                    <td>Boolean</td>
+                    <td>true; false</td>
+                    <td>Whether the WIFI-Netowrk visibility is hidden or visible (default: false)</td>
+                    <td>YES (default value: false)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>Example</h4>
+        <a href="/generate/wifi?ssid=My%20Network&encryption=Wpa&password=12345678&hidden=false"
+            target="_blank"><code>/generate/wifi?ssid=My%20Network&encryption=Wpa&password=12345678&hidden=false</code></a>
+        generates a
+        QR-Code connecting to a visible network with WPA Encryption.
     </div>
 
 
-    <h4>Example</h4>
-    <a href="/generate/epc?version=Eea&identification=Sct&name=CARNIVORA%20Grasleben%20e.V.&iban=DE30269910668282820000&amount=20.00&remittance_txt=I%20love%20Snow%20Leopards!&information=Donate%20to%20CARNIVORA%20e.V."
-        target="_blank"><code>/generate/epc?version=Eea&identification=Sct&name=CARNIVORA%20Grasleben%20e.V.&iban=DE30269910668282820000&amount=20.00&remittance_txt=I%20love%20Snow%20Leopards!&information=Donate%20to%20CARNIVORA%20e.V.</code></a>
-    generates a QR-Code for a donation of 20.00€ to <a href="https://www.carnivora-grasleben.de/"
-        target="_blank">CARNIVORA Wildtier –
-        und Artenschutzhilfe Grasleben e.V.</a>.
-
     <hr>
+
 
     <h2>Information [DE]</h2>
 

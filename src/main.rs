@@ -3,7 +3,7 @@ mod routes;
 mod utils;
 
 use axum::{response::Html, routing::get, Router};
-use routes::generate::{epc::get_generate_epc, get_generate};
+use routes::generate::{epc::get_generate_epc, get_generate, wifi::get_generate_wifi};
 use std::error::Error;
 use tower::ServiceBuilder;
 use tower_http::{cors::CorsLayer, trace::TraceLayer};
@@ -22,6 +22,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .route("/robots.txt", get(get_robots))
         .route("/generate", get(get_generate))
         .route("/generate/epc", get(get_generate_epc))
+        .route("/generate/wifi", get(get_generate_wifi))
         .layer(
             ServiceBuilder::new()
                 .layer(TraceLayer::new_for_http())
