@@ -1,8 +1,6 @@
 [package]
-# name = "rust_template"
 name = "qr_code_api"
 description = "AstragoDE's Rust Template"
-# authors = ["AstragoDE <51675359+AstragoDE@users.noreply.github.com>"]
 authors = ["AstragoDE <51675359+AstragoDE@users.noreply.github.com>"]
 version = "0.1.3"
 edition = "2024"
