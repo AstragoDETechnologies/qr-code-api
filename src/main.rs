@@ -2,11 +2,11 @@ mod model;
 mod routes;
 mod utils;
 
-use axum::{response::Html, routing::get, Router};
+use axum::{Router, response::Html, routing::get};
 use routes::generate::{epc::get_generate_epc, get_generate, wifi::get_generate_wifi};
 use std::error::Error;
 use tower::ServiceBuilder;
-use tower_http::{cors::CorsLayer, trace::TraceLayer};
+use tower_http::{compression::CompressionLayer, cors::CorsLayer, trace::TraceLayer};
 #[allow(unused_imports)]
 use tracing::{debug, error, info, trace, warn};
 
@@ -14,8 +14,6 @@ use tracing::{debug, error, info, trace, warn};
 async fn main() -> Result<(), Box<dyn Error>> {
     // Initialize tracing (Logger)
     tracing_subscriber::fmt::init();
-
-    let cors_layer: CorsLayer = CorsLayer::permissive();
 
     let app: axum::Router = Router::new()
         .route("/", get(get_index))
@@ -26,7 +24,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .layer(
             ServiceBuilder::new()
                 .layer(TraceLayer::new_for_http())
-                .layer(cors_layer),
+                .layer(CorsLayer::permissive())
+                .layer(CompressionLayer::new()),
         );
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await?;
